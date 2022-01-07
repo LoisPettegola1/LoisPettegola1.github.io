@@ -10,13 +10,25 @@
     <h1>Exo3</h1>
     <div>
         <p id="coord"></p>
+        <p id="x1"></p>
+        <p id="y1"></p>
+        <p id="z1"></p>
         </div>
+
 </body>
 
 <script>
 window.addEventListener('deviceorientation', function(event) {
     coord.innerHTML = "z : " + event.alpha + " x : " + event.beta + " y : " + event.gamma;
   });
+
+  function handleMotionEvent(event) {
+    x1.innerHTML = " x : " + event.accelerationIncludingGravity.x;
+    y1.innerHTML = " y : " + event.accelerationIncludingGravity.y;
+    z1.innerHTML = " z : " + event.accelerationIncludingGravity.z;
+}
+window.addEventListener("devicemotion", handleMotionEvent, true);
+
   </script>
 
 
