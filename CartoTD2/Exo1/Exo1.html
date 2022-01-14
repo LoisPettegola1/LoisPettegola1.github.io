@@ -7,7 +7,7 @@
     <title>Exo2</title>
 </head>
 <body>
-  <h1>Exo2</h1>
+  <h1>Exo1</h1>
  <div>
      <p id="coord"></p>
      <p id="coord2"></p>
@@ -37,6 +37,18 @@
     coord.innerHTML += ' Longitude : '+  crd.longitude;
     coord.innerHTML +=' La précision est de ' + crd.accuracy +' mètres.';
   }
+
+
+  var map = pos.map('map').setView([51.505, -0.09], 13);
+
+pos.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+}).addTo(map);
+
+pos.marker([51.5, -0.09]).addTo(map)
+    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+    .openPopup();
+
 
   navigator.geolocation.getCurrentPosition(success, error, options);
   navigator.geolocation.watchPosition(success2, error, options);
