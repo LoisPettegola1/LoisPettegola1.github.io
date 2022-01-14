@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exo2</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+    <title>TD2 Exo2</title>
 </head>
 <body>
   <h1>Exo1</h1>
  <div>
      <p id="coord"></p>
-     <p id="coord2"></p>
-     <p></p>
-     <p></p>
  </div>
+ <div id="map" style="height: 180px;"></div>
 </body>
 
 
@@ -25,33 +25,23 @@
     coord.innerText +=' Latitude : ' +  crd.latitude;
     coord.innerHTML += ' Longitude : '+  crd.longitude;
     coord.innerHTML +=' La précision est de ' + crd.accuracy +' mètres.';
-  }
-  function error(err) {
-    console.warn(`ERREUR (${err.code}): ${err.message}`);
-  }
+    
+    var map = L.map('map').setView([crd.latitude, crd.longitude], crd.accuracy);
 
-  function success2(pos) {
-    var crd = pos.coords;
-    coord.innerText ='Votre position actuelle est : ';
-    coord.innerText +=' Latitude : ' +  crd.latitude;
-    coord.innerHTML += ' Longitude : '+  crd.longitude;
-    coord.innerHTML +=' La précision est de ' + crd.accuracy +' mètres.';
-  }
-
-
-  var map = pos.map('map').setView([51.505, -0.09], 13);
-
-pos.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
 }).addTo(map);
 
-pos.marker([51.5, -0.09]).addTo(map)
-    .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+L.marker([crd.latitude, crd.longitude]).addTo(map)
+    .bindPopup('Vous êtes ici')
     .openPopup();
+  }
 
+    function error(err) {
+    console.warn(`ERREUR (${err.code}): ${err.message}`);
+  }
 
   navigator.geolocation.getCurrentPosition(success, error, options);
-  navigator.geolocation.watchPosition(success2, error, options);
   
   </Script>
 
