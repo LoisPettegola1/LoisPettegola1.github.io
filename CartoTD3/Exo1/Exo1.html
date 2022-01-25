@@ -10,6 +10,29 @@
     <div style="display:none;">
         <img id="source" src="montagne.jpg" width="690" height="473">
     </div>
+
+    <svg width="690" height="473">
+        <rect id="ciel" width="690" height="300" style="fill:rgb(134, 149, 219);stroke-width:3;stroke:rgb(0,0,0)" />
+        <polygon points="30,300 140,30 280,300"
+            style="fill:rgb(119, 119, 119);stroke:rgb(148, 111, 62);stroke-width:5;fill-rule:nonzero;" />
+        <polygon points="200,300 300,30 380,300"
+            style="fill:rgb(119, 119, 119);stroke:rgb(148, 111, 62);stroke-width:5;fill-rule:nonzero;" />
+        <polygon points="400,300 500,30 600,300"
+            style="fill:rgb(119, 119, 119);stroke:rgb(148, 111, 62);stroke-width:5;fill-rule:nonzero;" />
+        <polygon points="530,300 610,30 700,300"
+            style="fill:rgb(119, 119, 119);stroke:rgb(148, 111, 62);stroke-width:5;fill-rule:nonzero;" />
+        <circle id="soleil" cx="450" cy="100" r="50" stroke="black" stroke-width="4" fill="yellow" />
+        <rect x="0" y="300" width="690" height="173" style="fill:rgb(57, 146, 97);stroke-width:3;stroke:rgb(0,0,0)" />
+        <rect x="100" y="290" width="150" height="150"
+            style="fill:rgb(163, 121, 57);stroke-width:3;stroke:rgb(0,0,0)" />
+        <rect id="porte" x="120" y="365" width="50" height="75"
+            style="fill:rgb(70, 54, 31);stroke-width:3;stroke:rgb(0,0,0)" />
+        <polygon points="100,290 175,200 250,290"
+            style="fill:red;stroke-width:3;stroke:rgb(0,0,0);fill-rule:nonzero;" />
+
+    </svg>
+
+
 </body>
 
 <script type="application/javascript">
@@ -43,7 +66,7 @@
             ctx.fillStyle = 'brown';
             ctx.fillRect(75, 400, 50, 50); //Porte
             ctx.strokeStyle = 'black'
-            ctx.rect(75, 400, 50, 50); 
+            ctx.rect(75, 400, 50, 50);
             ctx.fill();
             ctx.stroke();
 
@@ -58,12 +81,27 @@
             ctx.strokeStyle = 'black'
             ctx.lineTo(200, 350);
             ctx.lineTo(130, 280);
-            ctx.lineTo(50, 350); 
+            ctx.lineTo(50, 350);
             ctx.fill();
             ctx.stroke();
-
-
         }
+
+        let colorCiel = 'rgb(134, 149, 219)'
+        let colorPorte = 'rgb(70, 54, 31)'
+        document.getElementById("soleil").addEventListener('click', () => {
+            let ciel = document.getElementById("ciel")
+            colorCiel = colorCiel == 'rgb(134, 149, 219)' ? "grey" : 'rgb(134, 149, 219)'
+            ciel.style.setProperty("fill", colorCiel)
+        })
+        let porte = document.getElementById("porte")
+        porte.addEventListener('mouseover', () => {
+            colorPorte = colorPorte == 'rgb(70, 54, 31)' ? "black" : 'rgb(70, 54, 31)'
+            porte.style.setProperty("fill", colorPorte)
+        })
+
+
+
+
     }
 
 </script>
