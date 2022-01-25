@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+</head>
+
+<body onload="draw();">
+    <canvas id="canvas" width="690" height="473"></canvas>
+    <div style="display:none;">
+        <img id="source" src="montagne.jpg" width="690" height="473">
+    </div>
+</body>
+
+<script type="application/javascript">
+    function draw() {
+        var canvas = document.getElementById("canvas");
+        if (canvas.getContext) {
+            var ctx = canvas.getContext("2d")
+
+            ctx.drawImage(document.getElementById('source'), 0, 0);
+
+            ctx.beginPath();
+            ctx.arc(450, 100, 50, 0, Math.PI + (Math.PI * 3) / 2, false);  // Cercle
+            ctx.fillStyle = 'yellow';
+            ctx.strokeStyle = 'black'
+            ctx.fill();
+            ctx.stroke();
+
+
+            ctx.beginPath();
+            ctx.lineWith = 5;
+            ctx.fillStyle = '#BD8247';
+            ctx.fillRect(50, 350, 150, 100); //Maison
+            ctx.strokeStyle = 'black'
+            ctx.rect(50, 350, 150, 100);
+            ctx.fill();
+            ctx.stroke();
+
+
+            ctx.beginPath();
+            ctx.lineWith = 5;
+            ctx.fillStyle = 'brown';
+            ctx.fillRect(75, 400, 50, 50); //Porte
+            ctx.strokeStyle = 'black'
+            ctx.rect(75, 400, 50, 50); 
+            ctx.fill();
+            ctx.stroke();
+
+
+
+            ctx.beginPath(); // Toit
+            ctx.fillStyle = 'red';
+            ctx.moveTo(50, 350);
+            ctx.lineTo(200, 350);
+            ctx.lineTo(130, 280);
+            ctx.lineTo(50, 350);
+            ctx.strokeStyle = 'black'
+            ctx.lineTo(200, 350);
+            ctx.lineTo(130, 280);
+            ctx.lineTo(50, 350); 
+            ctx.fill();
+            ctx.stroke();
+
+
+        }
+    }
+
+</script>
+
+</html>
