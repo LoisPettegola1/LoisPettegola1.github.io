@@ -37,24 +37,25 @@
         const geometry = new THREE.BoxGeometry();
 
         //Texture
-        var texture = new THREE.TextureLoader().load("textures/texture.jpg");
+        var texture = new THREE.TextureLoader();
         //texture.wrapS = THREE.RepeatWrapping;
         //texture.wrapT = THREE.RepeatWrapping;
         //texture.repeat.set(4, 4);
-        const material = new THREE.MeshPhongMaterial({ map: texture });
+        
+        const material = new THREE.MeshStandardMaterial({  color: 'blue', map: texture.load("textures/texture.jpg") });
 
         //Cube
         var cube = new THREE.Mesh(geometry, material);
         scene.add(cube);
 
         //Lumière
-        const light = new THREE.DirectionalLight(0xffffff, 1000);
-        light.position.set(-80, 80, 80);
+        const light = new THREE.DirectionalLight(0xfffffff, 10);
+        light.position.set(-80, 80, 20);
         light.angle = Math.PI / 5;
         light.target = cube;
         scene.add(light);
 
-        camera.position.z = 5;
+        camera.position.z = 3;
 
         function animate() {
             requestAnimationFrame(animate);
