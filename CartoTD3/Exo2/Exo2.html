@@ -42,8 +42,8 @@
         //texture.wrapT = THREE.RepeatWrapping;
         //texture.repeat.set(4, 4);
         
+        
         const material = new THREE.MeshStandardMaterial({  color: 'blue', map: texture.load("textures/texture.jpg") });
-
         //Cube
         var cube = new THREE.Mesh(geometry, material);
         scene.add(cube);

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>My first three.js app</title>
+		<style>
+            
+			body { margin: 0; }
+		</style>
+	</head>
+	<body>
+        
+		<script src="https://threejs.org/build/three.js"></script>
+		<script src="https://threejs.org/examples/js/controls/OrbitControls.js"></script>
+		<script src="https://threejs.org//examples/js/loaders/GLTFLoader.js"></script>
+		<script>
+			const scene = new THREE.Scene();
+			const camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 0.1, 1000 );
+			camera.position.set(2,0,5);
+
+			const renderer = new THREE.WebGLRenderer();
+			renderer.setSize( window.innerWidth, window.innerHeight );
+			document.body.appendChild( renderer.domElement );
+
+			const geometry = new THREE.BoxBufferGeometry();
+			const material = new THREE.MeshPhongMaterial( { color: 0x00ff00 } );
+			const texture = new THREE.TextureLoader().load( 'textures/texture.jpg' );
+
+			// immediately use the texture for material creation
+			const materialTex = new THREE.MeshPhongMaterial( { map: texture } );
+
+
+			const controls = new THREE.OrbitControls( camera, renderer.domElement );
+
+			const geometryE = new THREE.SphereGeometry(1, 32, 32);
+			const textureE = new THREE.TextureLoader().load( './textures/2k_earth_daymap.jpg' );
+			const materialTexE = new THREE.MeshBasicMaterial( { map: textureE } );
+			const earth = new THREE.Mesh( geometryE, materialTexE );
+			earth.position.set(0,0,0);
+			scene.add( earth ) ;
+
+
+		
+			// White directional light at half intensity shining from the top.
+			const directionalLight = new THREE.DirectionalLight( 0xffffff, 1.5 );
+			scene.add( directionalLight );
+
+			const animate = function () {
+				requestAnimationFrame( animate );
+
+				earth.rotation.y += 0.001;
+
+				renderer.render( scene, camera );
+			};
+
+			animate();
+
+
+
+
+            function lonLatToVector3( lng, lat, out )
+{
+    out = out || new THREE.Vector3();
+
+    //flips the Y axis
+    lat = Math.PI / 2 - lat;
+
+    //distribute to sphere
+    out.set(
+                Math.sin( lat ) * Math.sin( lng ),
+                Math.cos( lat ),
+                Math.sin( lat ) * Math.cos( lng )
+    );
+
+    return out;
+
+}
+
+
+
+var options = {enableHighAccuracy: true,timeout: 5000,maximumAge: 0};
+function success(pos) {
+    var crd = pos.coords;
+    var map = L.map('map').setView([crd.latitude, crd.longitude], 11);
+    L.marker([crd.latitude, crd.longitude]).addTo(map)
+
+}
+
+    function error(err) {
+    console.warn('ERREUR (${err.code}): ${err.message}');
+  }
+
+navigator.geolocation.getCurrentPosition(success, error, options);
+
+            
+
+ if(window.DeviceOrientationEvent) {
+    window.addEventListener('deviceorientation', function(orientation) {
+    }) ;
+  }
+
+		</script>
+	</body>
+</html>
