@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A==" crossorigin="" />
+	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js" integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA==" crossorigin=""></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+	
+	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+	<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+	<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+	<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+	
+	
+	
+	<title>Ville de Nice</title>
+	
+</head>
+<body>
+	<div class="banner-img w-100" style="margin-bottom:10px; text-align: center; display: flex; justify-content: center; align-items: center; flex-wrap: wrap;">
+        <img src="Nice-banner.jpg" class="img-fluid w-100" style="position: relative; height: 400px;" />
+        <h2 style="font-size: 70px; position: absolute; color: white; text-shadow: black 7px 2px 7px;">Bienvenue à Nice</h2>
+    </div>
+	<!-- <div>
+		<p id="coord"></p>
+	</div> -->
+	<div id="map" style="height: 400px;"></div>
+</body>
+
+
+<Script>
+	var options = {enableHighAccuracy: true,timeout: 5000,maximumAge: 0};
+	function success(pos) {
+		var crd = pos.coords;
+		// coord.innerText ='Votre position actuelle est: ';
+		// coord.innerText +='Latitude: ' +  crd.latitude;
+		// coord.innerHTML += ' <br/> Longitude: '+  crd.longitude;
+		// coord.innerHTML +=' <br/> La précision est de ' + crd.accuracy +' mètres.';
+		
+		var map = L.map('map').setView([crd.latitude, crd.longitude], 11);
+		
+
+		
+		var redIcon = new L.Icon({
+			iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+			shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+			iconSize: [29, 45],
+			iconAnchor: [12, 41],
+			popupAnchor: [1, -34],
+			shadowSize: [41, 41]
+		});
+		
+		var greenIcon = new L.Icon({
+			iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-green.png',
+			shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+			iconSize: [29, 45],
+			iconAnchor: [12, 41],
+			popupAnchor: [1, -34],
+			shadowSize: [41, 41]
+		});
+		
+		var cameraIcon = new L.Icon({
+			iconUrl: 'Camera.png',
+			shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+			iconSize: [40, 45],
+			iconAnchor: [12, 41],
+			popupAnchor: [1, -34],
+			shadowSize: [41, 41]
+		});
+		
+		var supermarketIcon = new L.Icon({
+			iconUrl: 'supermarket.png',
+			shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+			iconSize: [40, 45],
+			iconAnchor: [12, 41],
+			popupAnchor: [1, -34],
+			shadowSize: [41, 41]
+		});
+		
+		var markerFrom = L.marker([crd.latitude, crd.longitude]);
+		var markerNice =  L.marker([43.7, 7.25]);
+		var from = markerFrom.getLatLng();
+		var toNice = markerNice.getLatLng();
+		
+		var markerMassena =  L.marker([43.6962, 7.2707]);
+		var toMassena = markerMassena.getLatLng();
+		
+		var markerGaribaldi =  L.marker([43.7006, 7.2799]);
+		var toGaribaldi = markerGaribaldi.getLatLng();
+		
+		var markerProm =  L.marker([43.693177, 7.252095]);
+		var toProm = markerProm.getLatLng();
+		
+		var markerEtoile =  L.marker([43.7015673, 7.2678156]);
+		var toEtoile = markerEtoile.getLatLng();
+		
+		var markerCap3000 =  L.marker([43.67566, 7.189876]);
+		var toCap3000 = markerCap3000.getLatLng();
+		
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+		}).addTo(map);
+		
+		L.marker([crd.latitude, crd.longitude], {icon: redIcon}).addTo(map)
+		.bindPopup('Vous êtes ici')
+		.openPopup();
+		
+
+		
+		const createDiv = (src, text, lat, lng) => {
+			const div = document.createElement("div")
+			const img = new Image(150, 100);
+			const para = document.createElement("p")
+			const button = document.createElement("button");
+			button.innerHTML = "Go"
+
+			img.src = src;
+			para.innerHTML = text
+
+			div.appendChild(img)
+			div.appendChild(para)
+			div.appendChild(button)
+
+			button.addEventListener ("click", function() {
+				L.Routing.control({
+				waypoints: [
+				L.latLng([crd.latitude, crd.longitude]),
+				L.latLng([lat, lng])
+				]
+				}).addTo(map);
+			});
+
+			return div
+		}
+
+
+
+		L.marker([43.7, 7.25], {icon: greenIcon}).addTo(map)
+		.bindPopup(createDiv("Nice.jpg", 'Nice <br/> est à '+ (from.distanceTo(toNice)/1000).toFixed(0/1000000) + 'km de votre position' , 43.7, 7.25))
+		
+		L.marker([43.6962, 7.2707], {icon: cameraIcon}).addTo(map)
+		.bindPopup(createDiv("place_massena.jpg", 'Place Massena <br/> est à '+ (from.distanceTo(toMassena)/1000).toFixed(0/1000000) + 'km de votre position' , 43.6962, 7.2707))
+		
+		L.marker([43.7006, 7.2799],  {icon: cameraIcon}).addTo(map)
+		.bindPopup(createDiv("place-garibaldi.jpg", 'Place Garibaldi <br/> est à '+ (from.distanceTo(toGaribaldi)/1000).toFixed(0/1000000) + 'km de votre position' , 43.7006, 7.2799))
+
+		L.marker([43.693177, 7.252095],  {icon: cameraIcon}).addTo(map)
+		.bindPopup(createDiv("Promenadeanglais.jpg", 'Promenade des Anglais <br/> est à '+ (from.distanceTo(toProm)/1000).toFixed(0/1000000) + 'km de votre position' , 43.693177, 7.252095))
+
+		
+
+		L.marker([43.7015673, 7.2678156], {icon: supermarketIcon}).addTo(map)
+		.bindPopup(createDiv("niceetoile.jpg", 'Nice Etoile <br/> est à '+ (from.distanceTo(toEtoile)/1000).toFixed(0/1000000) + 'km de votre position' , 43.7015673, 7.2678156))
+
+		
+		L.marker([43.67566, 7.189876], {icon: supermarketIcon}).addTo(map)
+		.bindPopup(createDiv("Cap3000.jpg", 'Cap 3000 <br/> est à '+ (from.distanceTo(toCap3000)/1000).toFixed(0/1000000) + 'km de votre position' , 43.67566, 7.189876))
+		
+	}
+	
+	function error(err) {
+		console.warn(`ERREUR (${err.code}): ${err.message}`);
+	}
+	
+	
+	navigator.geolocation.getCurrentPosition(success, error, options);
+	
+</Script>
+
+
+</html>
+
+
+
+
+
+
