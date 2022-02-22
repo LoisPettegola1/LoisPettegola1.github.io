@@ -26,7 +26,7 @@
 	<!-- <div>
 		<p id="coord"></p>
 	</div> -->
-	<div id="map" style="height: 400px;"></div>
+	<div id="map" style="height: 500px;"></div>
 </body>
 
 
@@ -148,7 +148,6 @@
 
 		L.marker([43.693177, 7.252095],  {icon: cameraIcon}).addTo(map)
 		.bindPopup(createDiv("Promenadeanglais.jpg", 'Promenade des Anglais <br/> est à '+ (from.distanceTo(toProm)/1000).toFixed(0/1000000) + 'km de votre position' , 43.693177, 7.252095))
-
 		
 
 		L.marker([43.7015673, 7.2678156], {icon: supermarketIcon}).addTo(map)
